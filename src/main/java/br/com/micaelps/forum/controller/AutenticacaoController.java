@@ -24,18 +24,20 @@ import java.net.Authenticator;
 public class AutenticacaoController {
 
     @Autowired
-    private AuthenticationManager am;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    private TokenService tc;
+    private TokenService tokenService;
 
     @PostMapping
     public ResponseEntity<TokenDto> autenticar(@RequestBody @Valid loginForm form){
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = form.converter();
         System.out.println(usernamePasswordAuthenticationToken);
         try {
-            Authentication authenticate = am.authenticate(usernamePasswordAuthenticationToken);
-            String token = tc.gerarToken(authenticate);
+            Authentication authenticate = authenticationManager
+                    .authenticate(usernamePasswordAuthenticationToken);
+
+            String token = tokenService.gerarToken(authenticate);
             return ResponseEntity.ok(new TokenDto(token, "Bearer"));
         }
         catch (AuthenticationException ae){
