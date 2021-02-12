@@ -1,7 +1,7 @@
 package br.com.micaelps.forum.config.security;
 
 import br.com.micaelps.forum.config.AutenticacaoViaTokenFilter;
-import br.com.micaelps.forum.config.security.AutenticacaoService;
+import br.com.micaelps.forum.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +23,11 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     @Autowired
     AutenticacaoService ats;
 
+    @Autowired
+    TokenService tokenService;
+
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     @Override
     @Bean
@@ -34,12 +39,11 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/topicos").permitAll()
-                .antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and().addFilterBefore(new AutenticacaoViaTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
