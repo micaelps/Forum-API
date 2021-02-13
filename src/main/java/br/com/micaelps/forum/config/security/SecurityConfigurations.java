@@ -1,7 +1,5 @@
 package br.com.micaelps.forum.config.security;
 
-import br.com.micaelps.forum.config.AutenticacaoViaTokenFilter;
-import br.com.micaelps.forum.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,13 +14,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import br.com.micaelps.forum.config.AutenticacaoViaTokenFilter;
+import br.com.micaelps.forum.repository.UsuarioRepository;
+
 @EnableWebSecurity
 @Configuration
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
-
+    
     @Autowired
     AutenticacaoService ats;
-
+    
     @Autowired
     TokenService tokenService;
 
@@ -52,8 +53,4 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(ats).passwordEncoder(new BCryptPasswordEncoder());
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-
-    }
 }

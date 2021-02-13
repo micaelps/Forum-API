@@ -9,9 +9,9 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 @EnableSpringDataWebSupport
 @EnableCaching
 public class ForumApplication {
-
+	
 	public static void main(String[] args) {
-		SpringApplication.run(ForumApplication.class, args);
+	SpringApplication.run(ForumApplication.class, args);
 	}
 
 }

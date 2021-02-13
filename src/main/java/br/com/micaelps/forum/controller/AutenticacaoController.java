@@ -4,6 +4,7 @@ package br.com.micaelps.forum.controller;
 import br.com.micaelps.forum.config.security.TokenService;
 import br.com.micaelps.forum.controller.dto.TokenDto;
 import br.com.micaelps.forum.controller.form.loginForm;
+import br.com.micaelps.forum.modelo.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.net.Authenticator;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
@@ -43,5 +46,10 @@ public class AutenticacaoController {
         catch (AuthenticationException ae){
             return  ResponseEntity.badRequest().build();
         }
+
     }
+
+
+
+
 }
