@@ -20,7 +20,7 @@ import br.com.micaelps.forum.controller.dto.TokenDto;
 import br.com.micaelps.forum.controller.form.loginForm;
 
 
-@Profile("prod")
+@Profile(value = {"prod", "test"})
 @RestController
 @RequestMapping("/auth")
 public class AutenticacaoController {
