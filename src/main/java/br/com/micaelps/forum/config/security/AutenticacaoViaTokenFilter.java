@@ -1,4 +1,4 @@
-package br.com.micaelps.forum.config;
+package br.com.micaelps.forum.config.security;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -12,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import br.com.micaelps.forum.config.security.TokenService;
 import br.com.micaelps.forum.modelo.Usuario;
 import br.com.micaelps.forum.repository.UsuarioRepository;
 
@@ -40,13 +39,10 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 
     
     private void autenticarCliente(String token) {
-
-        Long usuarioId = tokenService.getIdUsuario(token);
-        Optional<Usuario> usuario = usuarioRepository.findById(usuarioId);
-        if(usuario.isPresent()){
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.get().getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
+		Long idUsuario = tokenService.getIdUsuario(token);
+		Usuario usuario = usuarioRepository.findById(idUsuario).get();
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     private String recuperarToken(HttpServletRequest request) {

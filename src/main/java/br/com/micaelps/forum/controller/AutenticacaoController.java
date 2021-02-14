@@ -35,7 +35,6 @@ public class AutenticacaoController {
     @PostMapping
     public ResponseEntity<TokenDto> autenticar(@RequestBody @Valid loginForm form){
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = form.converter();
-        System.out.println(usernamePasswordAuthenticationToken);
         try {
             Authentication authenticate = authenticationManager
                     .authenticate(usernamePasswordAuthenticationToken);
